@@ -47,6 +47,7 @@ class TestRunner(unittest.TestCase):
         runner = Runner.from_robots(TestRobot(), TestRobot(),
                                     delta_callback=callback)
         runner.run()
+        self.assertNotEqual(runner.history(), [])
         assert called
 
     def test_runner_from_robots_perf(self):

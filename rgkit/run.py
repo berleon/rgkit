@@ -79,6 +79,7 @@ class Runner:
         self._delta_callback = delta_callback
         self._names = [player1.name(), player2.name()]
         self.options = options
+        self._history = []
 
         if Runner.is_multiprocessing_supported():
             import multiprocessing
@@ -133,6 +134,9 @@ class Runner:
     def default_settings():
         return default_settings
 
+    def history(self):
+        return self._history
+
     def game(self, record_turns=False, unit_testing=False):
         return game.Game(self._players, record_turns=record_turns,
                          unit_testing=unit_testing)
@@ -180,6 +184,7 @@ class Runner:
             from rgkit.render import render
 
         g.run_all_turns()
+        self._history.append(g.history)
 
         if self.options.print_info and not self.options.curses:
             #print "rendering %s animations" % ("with"
